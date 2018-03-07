@@ -65,7 +65,7 @@ def get_profile(handle, sync=True):
         repos_data = [add_contributors(repo_data) for repo_data in repos_data]
 
     # make handle case-insensitive
-    other_profiles = Profile.objects.filter(handle_iexact=handle)
+    other_profiles = Profile.objects.filter(handle__iexact=handle)
     handle = other_profiles.first().handle if other_profiles.exists() else handle
 
     # store the org info in postgres
