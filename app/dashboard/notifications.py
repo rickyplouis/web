@@ -146,7 +146,7 @@ def maybe_market_to_slack(bounty, event_name):
     title = bounty.title if bounty.title else bounty.github_url
     msg = f"{event_name.replace('bounty', 'funded_issue')} worth {round(bounty.get_natural_value(), 4)} {bounty.token_name} " \
           f"{usdt_details}" \
-          f"{bounty.token_name}: {title} \n\n{bounty.get_absolute_url()}&slack=1"
+          f"{bounty.token_name}: {title} \n\n{bounty.get_absolute_url()}"
 
     try:
         channel = 'notif-gitcoin'
@@ -328,7 +328,7 @@ def maybe_market_to_github(bounty, event_name, profile_pairs=None):
             comment_id = bounty.submissions_comment
 
         # Handle creating or updating comments if profiles are provided.
-        if event_name in ['work_started', 'work_done', 'work_submitted'] and profile_pairs:
+        if event_name in ['work_started', 'work_submitted'] and profile_pairs:
             if comment_id is not None:
                 patch_issue_comment(comment_id, username, repo, msg)
             else:
@@ -340,7 +340,7 @@ def maybe_market_to_github(bounty, event_name, profile_pairs=None):
                         bounty.submissions_comment = int(response.get('id'))
                     bounty.save()
         # Handle deleting comments if no profiles are provided.
-        elif event_name in ['work_started', 'work_done'] and not profile_pairs:
+        elif event_name in ['work_started'] and not profile_pairs:
             if comment_id:
                 delete_issue_comment(comment_id, username, repo)
                 if event_name == 'work_started':
@@ -391,14 +391,14 @@ def maybe_market_tip_to_github(tip):
     _comments = "\n\nThe sender had the following public comments: \n> " \
                 f"{tip.comments_public}" if tip.comments_public else ""
     try:
-        value_in_usd = f"({tip.value_in_usdt} USD @ ${convert_token_to_usdt(tip.tokenName)}/{tip.tokenName})" if tip.value_in_usdt else ""
+        value_in_usd = f"({tip.value_in_usdt} USD @ ${round(convert_token_to_usdt(tip.tokenName), 2)}/{tip.tokenName})" if tip.value_in_usdt else ""
     except Exception:
         pass  # no USD conv rate
     msg = f"⚡️ A tip worth {round(tip.amount, 5)} {warning} {tip.tokenName} {value_in_usd} has been " \
           f"granted to {username} for this issue{_from}. ⚡️ {_comments}\n\nNice work {username}! To " \
           "redeem your tip, login to Gitcoin at https://gitcoin.co/explorer and select 'Claim Tip' " \
           "from dropdown menu in the top right, or check your email for a link to the tip redemption " \
-          "page. \n\n * ${amount_usdt_open_work()} in Funded OSS Work Available at: " \
+          f"page. \n\n * ${amount_usdt_open_work()} in Funded OSS Work Available at: " \
           "https://gitcoin.co/explorer\n * Incentivize contributions to your repo: " \
           "<a href='https://gitcoin.co/tip'>Send a Tip</a> or <a href='https://gitcoin.co/funding/new'>" \
           "Fund a PR</a>\n * No Email? Get help on the <a href='https://gitcoin.co/slack'>Gitcoin Slack</a>"
@@ -515,6 +515,7 @@ def maybe_post_on_craigslist(bounty):
         # for-else magic
         # if the loop completes normally that means we are still not at the edit page
         # hence return and don't proceed further
+        print('returning at first return')
         return
 
     posting_title = bounty.title
@@ -551,6 +552,7 @@ def maybe_post_on_craigslist(bounty):
         # for-else magic
         # if the loop completes normally that means we are still not at the edit page
         # hence return and don't proceed further
+        print('returning at 2nd return')
         return
 
     # submitting final form
