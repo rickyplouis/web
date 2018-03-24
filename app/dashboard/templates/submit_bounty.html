@@ -42,104 +42,49 @@
                                 {% include 'shared/bounty_nav.html' with active_item=1 %}
                                 <div class="w-100" style="text-align: center;">
                                     <h3>Fund an Issue</h3>
-                                    <img src="{% static "v2/images/prime.png" %}">
                                 </div>
-                                {% include 'shared/network_status.html' %}
                                 <div class="w-100">
-                                    <label class="form__label" for=issueURL>Issue URL</label>
-                                    <input required name='issueURL' id="issueURL" class="w-100 form__input" type="url" placeholder="https://github.com/user/repo/pull/n" value="{% if issueURL %}{{issueURL}}{%endif%}" />
+                                    Hey there, welcome to the 'new bouny' creation flow
+
+                                    <br>    
+                                    <br>    
+                                    Are you ready to post funded work?  We've seen over 300 funded issues on the Gitcoin platform; Here are some best practices:
+                                    <br>    
+                                    <br>    
+
+                                    <ul>    
+                                        <li>
+                                            <strong>Know what you're looking for</strong> - Are you looking to find a future collaborator, or just to get something done quickly?  Have you outlined clear acceptance criteria for your issue?  What is an acceptance time frame for your work?
+                                        </li>
+                                        <li>
+                                            <strong>Pick a fair price</strong> - The best rule of thumb for picking a price is to multiply (1) the number of hours it'd take a senior engineer to complete the scope * (2) the complexity of the task * (3) the hourly rate of a senior engineer.  If you underfund the issue, it might not get picked up quickly (if at all).
+                                        </li>
+                                        <li>
+                                            <strong>Documentation is key</strong> - If it's easy for a collaborator to get up &amp; running with your codebase; you're more likely to have success with a bounty.  Does your repo enforce strong code standards and patterns, please make sure those are well-communicated!
+                                        </li>
+                                        <li>
+                                            <strong>Leave room for error</strong> - Especially if your task is iterative or has a qualitative acceptance criteria, it's a good practice to leave some budget for <a href=/tips>a tip</a> at the end of the project.
+                                        </li>
+                                        <li>
+                                            <strong>Beware the project management triangle</strong> - Do you want work that's (1) Good, (2) Cheap, of (3) Fast?  Pick 2 of the 3, and design your bounty around those constraints! 
+                                        </li>
+                                    </ul>
+
+                                    Need some inspiration?  Check out <a href="/casestudies">Gitcoin Case Studies</a>.
+
+                                    <br>    
+                                    <br>    
+                                    Happy Bountying!
+
+                                    <br>
+
+                                    <input type="checkbox" name="getit" id=getit value="1">
+                                    <label style="font-size: 12px;" for="getit">Okay, I get it.  Don't show me this page anymore.</label>
                                 </div>
-                                <div class="w-100 mt-2">
-                                    <label class="form__label" for="amount">Amount</label>
-                                    <div class="form__flex-group">
-                                        <div class="form__amount-wrapper">
-                                            <input name='amount' id='amount'  class="form__input" type="number" placeholder="Amount" value="{{amount}}" step="0.001" />
-                                        </div>
-                                        <div class="form__group-item">
-                                            <div class="form__select2">
-                                                <select name='deonomination' id='token'></select>
-                                            </div>
-                                            <small class="form__input-help form__input-help--dynamic" id="usd_amount"></small>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% include 'shared/github_username.html' %}
-                                {% include 'shared/notification_email.html' %}
-                                {% include 'shared/name.html' %}
-                                <div id="advanced_container">
-                                    <div class="w-100 mt-2">
-                                        <label class="form__label" for="title">Issue Title</label>
-                                        <input name='title' id="title"  class="w-100 form__input" type="text" placeholder="Deploy the Foo to The Bar" value="{{issue_title}}" />
-                                    </div>
-                                    <div class="w-100 mt-2">
-                                        <label class="form__label" for="description">Issue Description</label>
-                                        <textarea required name="description" class="w-100 form__input" id="description" placeholder="Add some new feature."></textarea>
-                                </div>
-                                    <div class="w-100 mt-2">
-                                        <label class="form__label" for="keywords">Keywords</label>
-                                        <input name='keywords' id='keywords'  class="w-100 form__input" type="text" placeholder="python, solidity, html, javascript, react (optional)" value="{{keywords}}" />
-                                    </div>
-                                    <div class="w-100 mt-2">
-                                        <label class="form__label" for="expirationTimeDelta">Expires in</label>
-                                        <div class="form__select2">
-                                            <select class="w-100 js-select2" name="expirationTimeDelta">
-                                                <option value="86400">1 day</option>
-                                                <option value="259200">3 days</option>
-                                                <option value="604800">1 week</option>
-                                                <option value="1209600">2 weeks</option>
-                                                <option value="2592000">1 month</option>
-                                                <option value="7776000">3 months</option>
-                                                <option value="15552000">6 months</option>
-                                                <option value="31536000" selected="">1 year</option>
-                                                <option value="9999999999">Never</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="w-100 mt-2 d-flex ">
-                                        <div class="w-50 mt-2 mr-3 d-flex flex-column">
-                                            <label class="form__label">Issue Details</label>
-                                        </div>
-                                    </div>
-                                    <div class="form__group">
-                                        <div class="form__select2 form__group-item">
-                                            <select class="w-100 js-select2" name="experienceLevel">
-                                                <option value="">Experience Level</option>
-                                                <option>Beginner</option>
-                                                <option>Intermediate</option>
-                                                <option>Advanced</option>
-                                            </select>
-                                        </div>
-                                        <div class="form__select2 form__group-item">
-                                            <select class="w-100 js-select2" name="projectLength">
-                                                <option value="Unknown">Project Length</option>
-                                                <option>Hours</option>
-                                                <option>Days</option>
-                                                <option>Weeks</option>
-                                                <option>Months</option>
-                                            </select>
-                                        </div>
-                                        <div class="form__select2 form__group-item">
-                                            <select class="w-100 js-select2" name="bountyType">
-                                                <option value="">Bounty Type</option>
-                                                <option>Bug</option>
-                                                <option>Feature</option>
-                                                <option>Security</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-100 mt-2 terms_container">
-                                    <div class="form__checkbox">
-                                        <input name='terms' id='terms' type="checkbox" value=1 required />
-                                        <label class="form__label" for=terms>I have read, understand, and agree to, the <a href="{% url "terms" %}" target="_blank" rel="noopener noreferrer">Terms of Service</a>:</label>
-                                    </div>
-                                </div>
-                                {% include 'shared/metamask_estimate.html' %}
+
                                 <div class="form__footer form__footer--right">
-                                    <button class="button button--primary js-submit" type="submit">Fund Issue</button>
+                                    <button class="button button--primary js-submit" type="submit">Okay, I'm Ready</button>
                                     <br />
-                                    <a href="https://github.com/gitcoinco/gitcoinco/issues?q=is%3Aissue+is%3Aopen+label%3Ahelp" target="_blank" rel="noopener noreferrer">Having trouble?  Click here.</a>
                                 </div>
                             </form>
                             {% include 'shared/newsletter.html' %}
