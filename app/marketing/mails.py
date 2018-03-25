@@ -143,7 +143,7 @@ def new_bounty(bounty, to_emails=None):
         to_emails = []
 
     subject = f"⚡️ New Funded Issue Match worth {bounty.value_in_usdt} USD @ " \
-              f"${convert_token_to_usdt(bounty.token_name)}/{bounty.token_name} {bounty.keywords})"
+              f"${round(convert_token_to_usdt(bounty.token_name),2)}/{bounty.token_name} {bounty.keywords})"
 
     for to_email in to_emails:
         from_email = settings.CONTACT_EMAIL
